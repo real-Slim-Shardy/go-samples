@@ -2,7 +2,9 @@ package main
 
 import (
 	"errors"
+	"fmt"
 	"log"
+	"net/http"
 	"os"
 	"strconv"
 )
@@ -26,7 +28,14 @@ func main() {
 	log.Printf("Server will run on localhost:%s\n", port)
 
 	// run server
+	http.HandleFunc("/", handleMain)
+	http.ListenAndServe(":"+port, nil)
 
+}
+
+func handleMain(wr http.ResponseWriter, req *http.Request) {
+	log.Println("Receive request Method:", req.Method)
+	fmt.Fprint(wr, "<h1>Welcome to Base Page!<h1>")
 }
 
 // Create or Open file logs for storing all logs in it
