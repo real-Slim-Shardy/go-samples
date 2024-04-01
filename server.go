@@ -29,13 +29,27 @@ func main() {
 
 	// run server
 	http.HandleFunc("/", handleMain)
+	http.HandleFunc("/about", handleAbout)
+	http.HandleFunc("/info", handleInfo)
 	http.ListenAndServe(":"+port, nil)
-
 }
 
+// Handler function to serve requests on "localhost:port/"
 func handleMain(wr http.ResponseWriter, req *http.Request) {
-	log.Println("Receive request Method:", req.Method)
+	log.Printf("Receive request Method:%s Path:%s Sender:%s\n", req.Method, req.URL.Path, req.RemoteAddr)
 	fmt.Fprint(wr, "<h1>Welcome to Base Page!<h1>")
+}
+
+// Handler function to serve requests on "localhost:port/about"
+func handleAbout(wr http.ResponseWriter, req *http.Request) {
+	log.Printf("Receive request Method:%s Path:%s Sender:%s\n", req.Method, req.URL.Path, req.RemoteAddr)
+	fmt.Fprint(wr, "<h1>This is About Page!<h1>")
+}
+
+// Handler function to serve requests on "localhost:port/info"
+func handleInfo(wr http.ResponseWriter, req *http.Request) {
+	log.Printf("Receive request Method:%s Path:%s Sender:%s\n", req.Method, req.URL.Path, req.RemoteAddr)
+	fmt.Fprint(wr, "<h1>Welcome to Info Page!<h1>")
 }
 
 // Create or Open file logs for storing all logs in it
